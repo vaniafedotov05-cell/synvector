@@ -599,7 +599,7 @@ function About() {
     //{ name: "Tatiana Tarlakova", linkedin: "https://www.linkedin.com/in/pavel-pusuna-663338207/", img: shots[14] },
     { name: "Daniil Yuminov - 2D/Art Lead", linkedin: "https://www.linkedin.com/in/daniil-yuminov-91746b1a7/", img: shots[32] },
     { name: "Maksym Novikov - Lead Game Designer", linkedin: "https://www.linkedin.com/in/maksym-novikov-92062667/", img: shots[13] },
-    { name: "Denis Lachikhin - 3D Lead", linkedin: "https://www.linkedin.com/in/denis-lachikhin-706a7b72/", img: shots[33] },
+    { name: "Alexey Barash - 3D Lead", linkedin: "https://www.linkedin.com/in/denis-lachikhin-706a7b72/", img: shots[33] },
     { name: "Andrey Shmanatov - Dev lead/CTO", linkedin: "https://www.linkedin.com/in/andrey-shmanatov-b8a6b6166/", img: shots[34] },
     { name: "Pavel Puzyna - Narrative designer", linkedin: "https://www.linkedin.com/in/pavel-pusuna-663338207/", img: shots[35] },
     { name: "Daniil Aliyeu - QA Lead", linkedin: "https://www.linkedin.com/in/daniil-aliyeu/", img: shots[16] }
