@@ -25,7 +25,7 @@ export const MEDIA = {
   socials: [
     { label: "Steam", href: "#steam" },
     { label: "YouTube", href: "https://youtube.com/@synvector?si=EJQYPf4lMRUJQjNO" },
-    { label: "Telegram", href: "https://t.me/sfc_dev" },
+    { label: "Reddit", href: "https://www.reddit.com/r/Synvector/" },
     { label: "Discord", href: "https://discord.gg/9kqW3JBfP5" },
   ],
   infoBlocks: [
@@ -182,7 +182,7 @@ export default function GameLanding() {
   ];
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 selection:bg-sky-200 selection:text-slate-900 overflow-x-hidden">
+    <div className="min-h-screen bg-[#0B0F16] text-slate-900 selection:bg-sky-200 selection:text-slate-900 overflow-x-hidden">
       <Header
         nav={nav}
         onNav={(id) => scrollToEl(id)}
@@ -190,9 +190,9 @@ export default function GameLanding() {
         setMobileOpen={setMobileOpen}
       />
       <Hero />
-      <IntroText />
       <SocialButtons />
       <InfoBlocks />
+      <GameplayBlock />
       <About />
       {/* <Features />  // полностью удалено по запросу */}
       <Media />
@@ -266,180 +266,108 @@ const BTN_SOCIAL_GLASS =
 /* ===================== HEADER (тёмный; навигация сразу после лого, крупнее) ===================== */
 function Header({ nav, onNav, mobileOpen, setMobileOpen }) {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50">
-      {/* ТЁМНОЕ стекло: хорошо читается и на белом фоне страницы */}
-      <div className="bg-neutral-900/85 text-white backdrop-blur-xl ring-1 ring-white/10 supports-[backdrop-filter]:bg-neutral-900/75">
-        <div className="px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            {/* ЛЕВАЯ СТОРОНА: ЛОГО + НАВИГАЦИЯ */}
-            <div className="flex items-center gap-6">
-              {/* Логотип для хедера */}
-              <div className="flex items-center gap-3">
-                <img
-                  src={MEDIA.logos.header}
-                  alt="Synvector Logo"
-                  className="h-8 md:h-9 object-contain"
-                />
-              </div>
-              <nav className="hidden md:flex items-center gap-6 ml-6">
-                {nav.map((n) => (
-                  <button
-                    key={n.id}
-                    onClick={() => onNav(n.id)}
-                    className="px-3.5 py-2 text-base uppercase tracking-widest text-white/80 hover:text-white transition active:scale-95"
-                  >
-                    {n.label}
-                  </button>
-                ))}
-              </nav>
-            </div>
+  <header className="fixed top-0 left-0 right-0 z-50 px-6 pt-5">
+    <div className="mx-auto flex max-w-[1060px] items-center justify-between">
+      <nav className="hidden md:flex items-center gap-4">
+        {nav.map((n) => (
+          <button
+            key={n.id}
+            onClick={() => onNav(n.id)}
+            className="rounded-xl bg-white/20 px-3 py-1 text-center text-2xl text-white backdrop-blur-md ring-1 ring-white/20 transition hover:bg-white/30 active:scale-95"
+          >
+            {n.label}
+          </button>
+        ))}
+      </nav>
 
-            {/* ПРАВАЯ СТОРОНА: соц-иконки + CTA */}
-            <div className="hidden md:flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                {MEDIA.socials.filter(s => s.label !== 'Steam').map((s, i) => (
-                  <a
-                    key={i}
-                    href={s.href}
-                    className="inline-flex items-center justify-center p-2 rounded-lg text-white/90 hover:bg-white/10 transition ring-1 ring-white/10"
-                    aria-label={s.label}
-                    target={s.href.startsWith('http') ? '_blank' : undefined}
-                    rel={s.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  >
-                    {s.label === 'Reddit' && <IconBrandReddit width={18} height={18} />}
-                    {s.label === 'YouTube' && <IconBrandYouTube width={18} height={18} />}
-                    {s.label === 'Telegram' && <IconBrandTelegram width={18} height={18} />}
-                    {s.label === 'Discord' && <IconBrandDiscord width={18} height={18} />}
-                  </a>
-                ))}
-              </div>
-              <a href="#" className={BTN_PRIMARY_GLASS + " relative px-6 py-2.5 rounded-2xl hover-aurora overflow-visible"}>
-                Add to Wishlist
-                {/* Construction-tape style ribbon */}
-                <span className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-[8deg] select-none w-[110%]">
-                  <span
-                    className="block w-full py-0.5 shadow-lg ring-1 ring-black/20"
-                    style={{
-                      backgroundImage: 'repeating-linear-gradient(45deg, #fde047 0px, #fde047 12px, #111827 12px, #111827 18px)'
-                    }}
-                  >
-                    <span className="block text-center">
-                      <span className="inline-block px-1 py-0.5 text-[8px] font-extrabold uppercase tracking-wider text-black bg-yellow-300/90 rounded">
-                        Coming soon
-                      </span>
-                    </span>
-                  </span>
-                </span>
-              </a>
-            </div>
-
-            {/* Мобильное меню */}
-            <button
-              className="md:hidden inline-flex items-center justify-center p-2 hover:bg-white/10 active:scale-95 rounded-lg transition-all duration-200"
-              onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label="Toggle menu"
+      <div className="hidden md:flex items-center gap-3">
+        {MEDIA.socials
+          .filter((s) => ["YouTube", "Reddit", "Discord"].includes(s.label))
+          .map((s, i) => (
+            <a
+              key={i}
+              href={s.href}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 text-white backdrop-blur-md ring-1 ring-white/20 transition hover:bg-white/30"
+              aria-label={s.label}
+              target={s.href.startsWith("http") ? "_blank" : undefined}
+              rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
             >
-              <div className="relative w-6 h-6">
-                <span className={`absolute top-1 left-0 w-6 h-0.5 bg-white transition-all duration-300 ease-out ${mobileOpen ? 'rotate-45 translate-y-2' : ''}`} />
-                <span className={`absolute top-2.5 left-0 w-6 h-0.5 bg-white transition-all duration-300 ease-out ${mobileOpen ? 'opacity-0 scale-x-0' : 'scale-x-100'}`} />
-                <span className={`absolute top-4 left-0 w-6 h-0.5 bg-white transition-all duration-300 ease-out ${mobileOpen ? '-rotate-45 -translate-y-2' : ''}`} />
-              </div>
-            </button>
-          </div>
-        </div>
+              {s.label === "YouTube" && <IconBrandYouTube width={22} height={22} />}
+
+              {s.label === "Reddit" && (
+                <img
+                  src="/media/IconBrandReddit.png"
+                  alt="Reddit"
+                  className="h-[22px] w-[22px] object-contain"
+                />
+              )}
+
+              {s.label === "Discord" && <IconBrandDiscord width={22} height={22} />}
+            </a>
+          ))}
       </div>
 
-      {/* Мобильное выпадающее меню с белым стеклянным стилем */}
-      <div className={`md:hidden absolute top-16 left-0 right-0 z-50 transition-all duration-300 ease-out ${mobileOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-        {/* Фон-оверлей для затемнения */}
-        <div
-          className={`fixed inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300 ${mobileOpen ? 'opacity-100' : 'opacity-0'}`}
-          onClick={() => setMobileOpen(false)}
-        />
-
-        {/* Само меню */}
-        <div className={`relative mx-4 mt-2 transition-all duration-300 ease-out ${mobileOpen ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-4 opacity-0 scale-95'}`}>
-          <div className="bg-neutral-900/80 text-white backdrop-blur-xl ring-1 ring-white/10 supports-[backdrop-filter]:bg-neutral-900/70 shadow-2xl rounded-2xl overflow-hidden border border-white/10">
-
-            {/* Навигационные ссылки */}
-            <div className="px-2 py-2">
-              {nav.map((n, index) => (
-                <button
-                  key={n.id}
-                  onClick={() => { setMobileOpen(false); onNav(n.id); }}
-                  className={`w-full text-left px-4 py-3 hover:bg-white/10 active:scale-95 transition-all duration-200 text-base text-white/80 hover:text-white rounded-xl group ${mobileOpen ? 'animate-fadeInUp' : ''
-                    }`}
-                  style={{
-                    animationDelay: `${index * 100}ms`,
-                    animationFillMode: 'both'
-                  }}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-medium">{n.label}</span>
-                    <div className="w-2 h-2 bg-white/30 rounded-full group-hover:bg-white transition-all duration-200 group-hover:scale-125" />
-                  </div>
-                </button>
-              ))}
-            </div>
-
-            {/* Кнопка Wishlist */}
-            <div className={`px-4 py-3 border-t border-white/10 ${mobileOpen ? 'animate-fadeInUp' : ''
-              }`}
-              style={{
-                animationDelay: '400ms',
-                animationFillMode: 'both'
-              }}>
-              <a
-                href="#"
-                className={BTN_PRIMARY_GLASS + " w-full inline-flex items-center justify-center px-6 py-3 text-base rounded-xl shadow-lg hover:shadow-xl"}
-              >
-                Add to Wishlist
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-  );
+      <button
+        className="md:hidden ml-auto inline-flex items-center justify-center rounded-xl bg-white/20 p-3 text-white backdrop-blur-md"
+        onClick={() => setMobileOpen(!mobileOpen)}
+        aria-label="Toggle menu"
+      >
+        ☰
+      </button>
+    </div>
+  </header>
+);
 }
 
 /* ========================= HERO — одна мягкая тень + кнопки ниже ========================= */
 function Hero() {
   return (
-    <section className="relative isolate h-[80.85vh] w-full overflow-hidden" id="top">
-      {/* offset for fixed header */}
-      <div className="absolute top-0 left-0 right-0 h-16" aria-hidden="true" />
-      {/* Background WEBM video */}
-      <div className="absolute inset-0 -z-10">
-        <video
-          className="h-full w-full object-cover scale-110"
-          autoPlay
-          loop
-          muted
-          playsInline
-          poster={MEDIA.hero.poster}
-        >
-          <source src={MEDIA.hero.videoWebm} type="video/webm" />
-        </video>
-        {/* лёгкое затемнение */}
-        <div className="absolute inset-0 bg-black/25" />
+  <section className="relative isolate min-h-screen w-full overflow-hidden" id="top">
+    
+    {/* background video */}
+<div className="absolute inset-0 -z-10">
+  <video
+    className="h-full w-full object-cover scale-110"
+    autoPlay
+    loop
+    muted
+    playsInline
+  >
+    <source src="/media/0001-0240.mp4" type="video/mp4" />
+  </video>
 
-      </div>
+      {/* затемнение */}
+      <div className="absolute inset-0 bg-black/25" />
+      {/* плавный переход вниз */}
+<div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-b from-transparent to-[#0B0F16]" />
+    </div>
 
-      <div className="mx-auto flex h-full max-w-7xl flex-col px-4 text-center">
-        {/* Верхняя половина: центрированный логотип */}
-        <div className="flex-1 flex items-center justify-center">
+
+<div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col px-6 pt-64 pb-4">
+  <div className="flex flex-1 flex-col justify-end pb-4">
+          <div className="ml-auto mb-6 max-w-[380px] rounded-2xl bg-black/25 px-5 py-3 text-left text-sm sm:text-xs leading-tight text-white backdrop-blur-md ring-1 ring-white/60">
+            Mount & Blade in space — Action RPG with tactical pause,
+            customizable fleets, co-op and moral contracts.
+          </div>
+
           <img
-            src={MEDIA.logos.hero}
-            alt="Synvector Logo"
-            className="h-[22px] sm:h-[31px] md:h-10 lg:h-11 object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
-            decoding="async"
-            fetchpriority="high"
-          />
-        </div>
+  src="/media/Logo.png"
+  alt="Logo"
+  className="w-full max-w-[1320px] object-contain drop-shadow-[0_8px_18px_rgba(0,0,0,0.65)]"
+  decoding="async"
+  fetchpriority="high"
+/>
 
-        {/* Нижняя половина: отступ вместо трейлера (текст/CTA при желании) */}
-        <div className="flex-1" />
+          <a
+  href={MEDIA.socials.find((s) => s.label === "Steam")?.href || "#"}
+  className="mx-auto mt-5 inline-flex h-[92px] w-[320px] items-center justify-center bg-contain bg-center bg-no-repeat text-3xl font-bold text-white transition hover:scale-[1.02] active:scale-95"
+  style={{
+    backgroundImage: "url('/media/Rectangle 28.png')"
+  }}
+>
+  Steam
+</a>
+        </div>
       </div>
     </section>
   );
@@ -448,67 +376,150 @@ function Hero() {
 /* ===== Social links buttons strip ===== */
 function SocialButtons() {
   return (
-    <section className="bg-white pt-2 pb-8 sm:pb-10">
-      <div className="mx-auto max-w-4xl px-4">
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-          {MEDIA.socials.filter(s => s.label !== 'Steam').map((s, i) => (
-            <a
-              key={i}
-              href={s.href}
-              className="inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2.5 rounded-xl bg-black text-white hover:bg-neutral-800 active:scale-95 transition shadow-sm ring-1 ring-black/10 w-[140px] sm:w-[160px]"
-              target={s.href.startsWith('http') ? '_blank' : undefined}
-              rel={s.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-            >
-              <span className="inline-flex h-5 w-5 items-center justify-center">
-                {s.label === 'Reddit' && <IconBrandReddit width={20} height={20} />}
-                {s.label === 'YouTube' && <IconBrandYouTube width={20} height={20} />}
-                {s.label === 'Telegram' && <IconBrandTelegram width={20} height={20} />}
-                {s.label === 'Discord' && <IconBrandDiscord width={20} height={20} />}
-              </span>
-              <span className="text-sm font-medium truncate">{s.label}</span>
-            </a>
-          ))}
+    <section
+      id="about"
+      className="relative overflow-hidden bg-[#0B0F16] pt-20 pb-12 md:pt-24 md:pb-14"
+      style={{
+        backgroundImage: "url('/media/image 45.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="absolute inset-0 bg-black/35" />
+
+/* blur */
+<div className="absolute inset-0 backdrop-blur-[6px]" />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-6">
+        <div className="relative mx-auto rounded-[42px] border border-white/35 bg-white/[0.06] px-7 py-9 backdrop-blur-xl md:min-h-[340px] md:max-w-[1080px] md:rounded-[48px] md:px-12 md:py-12">
+
+          <div className="pointer-events-none absolute inset-0 rounded-[42px] bg-gradient-to-r from-[#102626]/70 via-black/10 to-transparent md:rounded-[48px]" />
+
+          <div className="relative z-20 max-w-none md:max-w-[560px]">
+            <h2 className="text-4xl font-bold leading-tight text-white md:text-5xl">
+              About the game
+            </h2>
+
+            <p className="mt-5 text-[17px] leading-relaxed text-white/85 md:text-base md:leading-relaxed">
+              SYNVECTOR is a sci-fi action RPG where you command an independent
+              mercenary fleet in a galaxy torn by war and betrayal. Switch
+              between real-time third-person combat and tactical pause,
+              customize your ships, and team up in 4-player co-op. Your choices
+              and reputation shape missions, factions, and the fate of the
+              stars.
+            </p>
+          </div>
+
+          <img
+            src="/media/image 8.png"
+            alt="Android"
+            className="pointer-events-none absolute bottom-[-0px] right-[40px] hidden object-contain z-10 lg:block lg:h-[130%] xl:right-[40px] xl:h-[145%]"
+          />
+        </div>
+      </div>
+
+
+      {/* плавный переход к следующему блоку */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-[#0B0F16]" />
+    </section>
+  );
+}
+
+function InfoBlocks() {
+  return (
+    <section className="relative overflow-hidden bg-[#0B0F16] py-24">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-6 md:grid-cols-[0.9fr_1.1fr]">
+        <div className="relative z-10 max-w-[560px]">
+          <div>
+            <h2 className="text-4xl font-bold text-white md:text-5xl">
+              Play Co-op
+            </h2>
+            <p className="mt-4 max-w-[430px] text-sm leading-relaxed text-white/75">
+              Team up with friends and share command of a fleet. Each player
+              controls a different squad, coordinating strategies for large-scale
+              battles. Victory feels even better when achieved together.
+            </p>
+          </div>
+
+          <div className="mt-16">
+            <h2 className="text-4xl font-bold text-white md:text-5xl">
+              Fleet Customization
+            </h2>
+            <p className="mt-4 max-w-[460px] text-sm leading-relaxed text-white/75">
+              Build the fleet of your dreams by fusing human and alien
+              technology. Equip your ships with experimental weapons and unique
+              modules to create unstoppable tactical combos.
+            </p>
+          </div>
+        </div>
+
+        <div className="relative min-h-[420px]">
+          <img
+            src="/media/Group 94.png"
+            alt="Spaceship"
+            className="absolute right-0 top-0 w-full max-w-[720px] object-contain"
+          />
         </div>
       </div>
     </section>
   );
 }
 
-/* ===== Текстовый блок перед боди (чистый фон, без рамок) ===== */
-function IntroText() {
-  const [ref, visible] = useInView({ threshold: 0.15 });
+function GameplayBlock() {
   return (
-    <section
-      id="about"
-      ref={ref}
-      className={`bg-white pt-8 pb-6 sm:pb-8 transition-all duration-700 ease-out ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}
-    >
-      <div className="mx-auto max-w-3xl px-4 text-center">
-        <h2 className="text-2xl sm:text-3xl font-bold">About the Game</h2>
-        <p className="mt-3 text-slate-700 text-base sm:text-lg leading-relaxed">
-          SYNVECTOR is a sci-fi action RPG where you command an independent mercenary fleet in a galaxy torn by war and betrayal. Switch between real-time third-person combat and tactical pause, customize your ships, and team up in 4-player co-op. Your choices and reputation shape missions, factions, and the fate of the stars.
-        </p>
-      </div>
-    </section>
-  );
-}
+    <section className="relative overflow-hidden bg-[#0B0F16] py-20">
+      <div className="relative mx-auto max-w-7xl px-6">
 
-/* ========== Full-bleed Info Blocks (edge-to-edge), clean ========= */
-function InfoBlocks() {
-  // добавляем один блок поверх MEDIA.infoBlocks
-  const extraBlock = {
-    title: "Multi-Genre Gameplay",
-    text: "Engage in fast-paced real-time space battles, where every second counts. Use the *active pause* to issue tactical commands, then jump right back into the action. Between the fights, explore role-playing elements that let you shape your character and fleet.",
-    img: "/media/slide5.webp",
-  };
-  const blocks = [...MEDIA.infoBlocks, extraBlock];
+          {/* верхняя стеклянная плашка */}
+          <div className="relative z-20 rounded-[32px] border border-white/25 bg-white/[0.04] px-8 py-6 backdrop-blur-md">
+            <h2 className="text-3xl font-bold leading-tight text-white md:text-4xl">
+              Real-Time Action & Tactical Pause+RPG
+            </h2>
 
-  return (
-    <section className="relative w-full bg-white">
-      <div className="space-y-0">
-        {blocks.map((b, i) => (
-          <InfoRow key={i} {...b} flip={i % 2 === 1} />
-        ))}
+            <p className="mt-4 max-w-[980px] text-sm leading-relaxed text-white/80">
+              Engage in fast-paced real-time space battles, where every second
+              counts. Use the *active pause* to issue tactical commands, then
+              jump right back into the action. Between the fights, explore
+              role-playing elements that let you shape your character and fleet.
+            </p>
+          </div>
+
+          {/* корабль */}
+          <img
+            src="/media/image 82.png"
+            alt="Spaceship"
+            className="pointer-events-none absolute left-1/2 top-[52%] z-10 w-[110%] max-w-[1200px] -translate-x-1/2 -translate-y-1/2 object-contain"
+          />
+
+          {/* нижние тексты */}
+          <div className="relative z-20 mt-[330px] grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-20">
+            <div>
+              <h3 className="text-3xl font-bold leading-tight text-white md:text-4xl">
+                Moral<br />
+                and Political Depth
+              </h3>
+
+              <p className="mt-5 max-w-[430px] text-sm leading-relaxed text-white/75">
+                Forge through black-and-white choices. Every decision shifts
+                alliances, sparks rivalries, and shapes the fate of the galaxy.
+                Your actions define the story — and your reputation.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-3xl font-bold leading-tight text-white md:text-4xl">
+                Multi-Genre Gameplay
+              </h3>
+
+              <p className="mt-5 max-w-[520px] text-sm leading-relaxed text-white/75">
+                Engage in fast-paced real-time space battles, where every second
+                counts. Use the *active pause* to issue tactical commands, then
+                jump right back into the action. Between the fights, explore
+                role-playing elements that let you shape your character and
+                fleet.
+              </p>
+            </div>
+          </div>
       </div>
     </section>
   );
@@ -554,136 +565,160 @@ function InfoRow({ title, text, img, flip }) {
 /* ===================== About: Collage + Team Sidebar ===================== */
 function About() {
   const [ref, visible] = useInView({ threshold: 0.2 });
-  const shots = [
-    "/media/pp/0.webp",
-    "/media/pp/1.webp",
-    "/media/pp/2.webp",
-    "/media/pp/3.webp",
-    "/media/pp/4.webp",
-    "/media/pp/5.webp",
-    "/media/pp/6.webp",
-    "/media/pp/7.webp",
-    "/media/pp/8.webp",
-    "/media/pp/9.webp",
-    "/media/pp/10.webp",
-    "/media/pp/11.webp",
-    "/media/pp/12.webp",
-    "/media/pp/13.webp",
-    "/media/pp/14.webp",
-    "/media/pp/15.webp",
-    "/media/pp/16.webp",
-    "/media/pp/17.webp",
-    "/media/pp/18.webp",
-    "/media/pp/19.webp",
-    "/media/pp/20.webp",
-    "/media/pp/21.webp",
-    "/media/pp/22.webp",
-    "/media/pp/23.webp",
-    "/media/pp/24.webp",
-    "/media/pp/25.webp",
-    "/media/pp/26.webp",
-    "/media/pp/27.webp",
-    "/media/pp/28.webp",
-    "/media/pp/29.webp",
-    "/media/pp/30.webp",
-    "/media/pp/31.webp",
-    "/media/pp/32.webp",
-    "/media/pp/33.webp",
-    "/media/pp/34.webp",
-    "/media/pp/35.webp",
-  ];
 
-  // Manually editable team list (trimmed to requested members only)
-  const teamMembers = [
-    //{ name: "Aleksey Aleshin",  linkedin: "https://www.linkedin.com/in/greylis-54148a12a/", img: shots[0] },
-    //{ name: "Tatiana Tarlakova", linkedin: "https://www.linkedin.com/in/pavel-pusuna-663338207/", img: shots[14] },
-    { name: "Daniil Yuminov - 2D/Art Lead", linkedin: "https://www.linkedin.com/in/daniil-yuminov-91746b1a7/", img: shots[32] },
-    { name: "Maksym Novikov - Lead Game Designer", linkedin: "https://www.linkedin.com/in/maksym-novikov-92062667/", img: shots[13] },
-    { name: "Denis Lachikhin - 3D Lead", linkedin: "https://www.linkedin.com/in/denis-lachikhin-706a7b72/", img: shots[33] },
-    { name: "Andrey Shmanatov - Dev lead/CTO", linkedin: "https://www.linkedin.com/in/andrey-shmanatov-b8a6b6166/", img: shots[34] },
-    { name: "Pavel Puzyna - Narrative designer", linkedin: "https://www.linkedin.com/in/pavel-pusuna-663338207/", img: shots[35] },
-    { name: "Daniil Aliyeu - QA Lead", linkedin: "https://www.linkedin.com/in/daniil-aliyeu/", img: shots[16] }
-  ];
+  const Person = ({ person }) => (
+    <div className="flex flex-col items-center text-center min-w-0">
+      <img
+        src={person.img}
+        alt={person.name}
+        className="h-[72px] w-[72px] rounded-full object-cover"
+      />
 
-  const team = [
-    { role: "3D / 2D Artists", name: "7" },
-    { role: "Developers & DevOps", name: "4" },
-    { role: "Game Designers & CEO", name: "3" },
+      <div className="mt-2 max-w-[100px] text-[12px] leading-tight text-cyan-300">
+        {person.name}
+      </div>
 
-    { role: "UI/UX Designers", name: "2" },
-    { role: "Tech & VFX Specialists", name: "2" },
-    { role: "Project Manager", name: "1" },
+      <div className="mt-1 max-w-[100px] text-[10px] leading-tight text-white">
+        {person.role}
+      </div>
+    </div>
+  );
 
-    { role: "Community Manager", name: "1" },
-    { role: "Cinematic & Music Designer", name: "1" },
+  const Group = ({ title, children, className = "" }) => (
+    <div
+      className={`relative rounded-[24px] border border-white/60 bg-white/[0.02] px-5 py-5 ${className}`}
+    >
+      <div className="absolute -top-3 left-6 bg-[#1a2028] px-2 text-sm text-white">
+        {title}
+      </div>
+
+      {children}
+    </div>
+  );
+
+  const people = [
+    // Management
+    { name: "Alexey Aleshin", role: "CEO", img: "/media/Ellipse 1.png" },
+    { name: "Ivan Kalnaus", role: "Project manager", img: "/media/Ellipse 24.png" },
+    { name: "Konstantin", role: "Marketing Manager", img: "/media/Ellipse 3.png" },
+
+    // Design
+    { name: "Pavel Puzyna", role: "Lead Narrative designer", img: "/media/Ellipse 4.png" },
+    { name: "Maxim Novikov", role: "Game designer", img: "/media/Ellipse 15.png" },
+    { name: "Maxim Dubrovsky", role: "Tech Game designer", img: "/media/Ellipse 6.png" },
+    { name: "Gleb Kovalevich", role: "UIUX designer", img: "/media/Ellipse 1.png" },
+    { name: "Alexander Lyulchenko", role: "Sound designer", img: "/media/Ellipse 7.png" },
+    { name: "Ivan Fedotov", role: "Designer", img: "/media/Ellipse 16.png" },
+
+    // Tech Art
+    { name: "Anton Zarubin", role: "TechArt", img: "/media/Ellipse 2.png" },
+    { name: "Egor Kirik", role: "VFX/TechArt", img: "/media/Ellipse 17.png" },
+
+    // Development
+    { name: "Anna Potetenko", role: "Developer/UX", img: "/media/Ellipse 8.png" },
+    { name: "Margarita Chebotareva", role: "Developer", img: "/media/Ellipse 9.png" },
+    { name: "Alexander Poretsky", role: "Developer", img: "/media/Ellipse 18.png" },
+    { name: "Andrey Shmanatov", role: "CTO", img: "/media/Ellipse 3.png" },
+
+    // 2D
+    { name: "Daniil Yuminov", role: "Art Director", img: "/media/Ellipse 10.png" },
+    { name: "Vyacheslav Grigorenko", role: "2D concept artist", img: "/media/Ellipse 11.png" },
+    { name: "Vitaliy Shemyakin", role: "2D concept artist", img: "/media/Ellipse 19.png" },
+    { name: "Abdurashid Rakhimberdiev", role: "2D concept artist", img: "/media/Ellipse 4.png" },
+    { name: "Ewelina Dobrzyanska", role: "2D concept artist", img: "/media/Ellipse 12.png" },
+    { name: "Igor Kirichenko", role: "2D illustrator artist", img: "/media/Ellipse 20.png" },
+
+    // 3D
+    { name: "Aleksei Barash", role: "3D Lead", img: "/media/Ellipse 21.png" },
+    { name: "Artyom Stikhin", role: "3D artist", img: "/media/Ellipse 13.png" },
+    { name: "Artyom", role: "3D artist", img: "/media/Ellipse 22.png" },
+    { name: "Vladislav Kiselev", role: "3D artist texture", img: "/media/Ellipse 5.png" },
+    { name: "Margarita Borzykh", role: "Cinematic 3D artist", img: "/media/Ellipse 14.png" },
+    { name: "Sergey Dolzhenko", role: "VFX / Rigger", img: "/media/Ellipse 23.png" },
   ];
 
   return (
     <section
       id="team"
       ref={ref}
-      className={`relative py-14 bg-white transition-all duration-700 ease-out overflow-hidden ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
-        }`}
+      className={`py-10 bg-[#0B0F16] transition-all duration-700 ${
+        visible ? "opacity-100" : "opacity-0"
+      }`}
     >
-      <div className="mx-auto max-w-6xl px-4 overflow-hidden">
-        <div className="mb-8">
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl font-bold text-center px-2">Experienced team<br />you can trust</h2>
-          <p className="mt-3 text-center text-slate-600 max-w-3xl mx-auto text-sm xs:text-base sm:text-lg px-4 text-wrap">
-            Our core team comes from top studios like <strong>Wargaming</strong>, <strong>Playrix</strong>, <strong>Gaya</strong>, and <strong>Ubisoft</strong>. With strong backgrounds in both <strong>AAA</strong> and large-scale mobile projects, we combine industry best practices and deep market knowledge to deliver high-quality, commercially successful games.
-          </p>
-        </div>
+      <div className="mx-auto max-w-[1180px] px-4">
+        <div className="rounded-[42px] border border-white/40 bg-white/[0.04] p-6 backdrop-blur-xl">
 
-        {/* Section label before team photos */}
-        <div className="mb-4 px-1">
-          <div className="text-[11px] xs:text-xs sm:text-sm uppercase tracking-[0.2em] text-slate-500 font-semibold">OUR LEADERS</div>
-        </div>
+          {/* ВЕРХ */}
+          <div className="grid gap-6 lg:grid-cols-[1fr_0.95fr] lg:items-start">
+            <div>
+              <h2 className="text-[34px] font-bold leading-[0.95] text-white lg:text-[64px]">
+                Experienced team
+                <br />
+                you can trust
+              </h2>
 
-        <div className="grid gap-8 lg:gap-10 lg:grid-cols-12">
-          {/* Collage */}
-          <div className="lg:col-span-8 overflow-hidden">
-            <div className="grid grid-cols-3 gap-1 xs:gap-2 sm:gap-4">
-              {teamMembers.map((m, idx) => {
-                const rowIndex = Math.floor(idx / 3);
-                const offsetPx = rowIndex % 2 === 0 ? 8 : -8; // alternate rows right/left
-                return (
-                  <div key={idx} className="relative overflow-hidden rounded-lg xs:rounded-xl sm:rounded-2xl shadow-lg hover-aurora group w-20 h-20 xs:w-24 xs:h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 mx-auto" style={{ transform: `translateX(${offsetPx}px)` }}>
-                    <img src={m.img || shots[idx % shots.length]} alt={m.name} className="h-full w-full object-cover transition duration-500 ease-out group-hover:scale-110 group-hover:blur-sm" loading="lazy" decoding="async" />
-                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="absolute inset-0 bg-black/40" />
-                      <div className="relative z-10 px-2">
-                        <div className="text-white text-xs xs:text-sm sm:text-base font-semibold">{m.name}</div>
-                        {m.linkedin ? (
-                          <a href={m.linkedin} target={m.linkedin.startsWith('http') ? '_blank' : undefined} rel={m.linkedin.startsWith('http') ? 'noopener noreferrer' : undefined} className="mt-2 inline-flex items-center justify-center rounded-full bg-white/90 hover:bg-white text-slate-900 p-2 transition">
-                            <IconBrandLinkedIn width={16} height={16} />
-                          </a>
-                        ) : null}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+              <p className="mt-6 max-w-[520px] text-sm leading-relaxed text-white/80">
+                Our core team comes from top studios like Wargaming, Playrix,
+                Gaya and Ubisoft. With strong backgrounds in both AAA and
+                large-scale mobile projects, we combine industry best practices
+                and deep market knowledge to deliver high-quality,
+                commercially successful games.
+              </p>
             </div>
+
+            <Group title="Management team" className="lg:mt-10">
+              <div className="grid grid-cols-3 gap-6">
+                {people.slice(0, 3).map((p, i) => (
+                  <Person key={i} person={p} />
+                ))}
+              </div>
+            </Group>
           </div>
 
-          {/* Team sidebar */}
-          <div className="lg:col-span-4">
-            <div className="sticky top-16 rounded-2xl bg-white/80 backdrop-blur-sm ring-1 ring-black/5 p-4 sm:p-6 shadow-sm hover-aurora">
-              <h3 className="text-xl sm:text-2xl font-semibold">Team Structure</h3>
-              <p className="mt-2 text-slate-600 text-sm sm:text-base text-wrap">
-                Our diverse team of 21 professionals working together to create exceptional gaming experiences.
-              </p>
-              <ul className="mt-4 space-y-2 sm:space-y-3">
-                {team.map((m, i) => (
-                  <li key={i} className="flex items-center justify-between text-sm sm:text-base">
-                    <span className="text-slate-600">{m.role}</span>
-                    <span className="font-medium text-slate-900">{m.name}</span>
-                  </li>
+          <div className="mt-6 space-y-6">
+
+            <Group title="Design team">
+              <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
+                {people.slice(3, 9).map((p, i) => (
+                  <Person key={i} person={p} />
                 ))}
-              </ul>
-              <div className="mt-5 text-xs sm:text-sm text-slate-500">
-                Want to collaborate? <a href="mailto:sspacefleetcommander@gmail.com" className="underline decoration-slate-400 hover:text-slate-700">Get in touch</a>.
               </div>
+            </Group>
+
+            <div className="grid gap-6 lg:grid-cols-[0.65fr_1.35fr]">
+              <Group title="Tech Art">
+                <div className="grid grid-cols-2 gap-5">
+                  {people.slice(9, 11).map((p, i) => (
+                    <Person key={i} person={p} />
+                  ))}
+                </div>
+              </Group>
+
+              <Group title="Development team">
+                <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
+                  {people.slice(11, 15).map((p, i) => (
+                    <Person key={i} person={p} />
+                  ))}
+                </div>
+              </Group>
             </div>
+
+            <Group title="2d team">
+              <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
+                {people.slice(15, 21).map((p, i) => (
+                  <Person key={i} person={p} />
+                ))}
+              </div>
+            </Group>
+
+            <Group title="3d team">
+              <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
+                {people.slice(21, 27).map((p, i) => (
+                  <Person key={i} person={p} />
+                ))}
+              </div>
+            </Group>
+
           </div>
         </div>
       </div>
@@ -694,28 +729,27 @@ function About() {
 /* ====================== Media / FAQ / Newsletter ====================== */
 function Media() {
   const [ref, visible] = useInView({ threshold: 0.15 });
-  const YT_ID = MEDIA.trailerYouTubeId;
-
   return (
     <section
       id="media"
       ref={ref}
-      className={`relative py-14 bg-white transition-all duration-700 ease-out ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
-        }`}
+      className={`relative overflow-hidden bg-[#0B0F16] py-16 transition-all duration-700 ease-out ${
+        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+      }`}
     >
-      <div className="mx-auto max-w-4xl px-4">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center">Watch the Trailer</h2>
+      <div className="mx-auto max-w-5xl px-6">
+        <h2 className="text-center text-4xl font-bold text-white md:text-5xl">
+          Watch the Trailer
+        </h2>
 
-        <div className="mt-6 aspect-video overflow-hidden rounded-2xl bg-black shadow-sm ring-1 ring-black/5 hover-aurora">
-          <iframe
-            className="h-full w-full"
-            src={`https://www.youtube.com/embed/${YT_ID}?rel=0&modestbranding=1`}
-            title="Trailer"
-            loading="lazy"
-            referrerPolicy="origin-when-cross-origin"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          />
+        <div className="mt-8 aspect-video overflow-hidden bg-black">
+          <video
+            className="h-full w-full object-cover"
+            controls
+            poster="/media/Synvector_02-2.mp4"
+          >
+            <source src="/media/Synvector_02-2.mp4" type="video/mp4" />
+          </video>
         </div>
       </div>
     </section>
@@ -723,41 +757,54 @@ function Media() {
 }
 
 function FAQ() {
+  const [ref, visible] = useInView({ threshold: 0.15 });
+
   const faqs = [
     { q: "What platforms will be supported?", a: "PC at launch. Consoles TBD." },
     { q: "Will there be multiplayer?", a: "Co-op and competitive modes are planned post-launch." },
     { q: "When is the release date?", a: "To be announced. Follow our socials for updates." },
   ];
-  const [ref, visible] = useInView({ threshold: 0.15 });
 
   return (
     <section
       id="faq"
       ref={ref}
-      className={`relative py-14 bg-white transition-all duration-700 ease-out ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
-        }`}
+      className={`relative overflow-hidden bg-[#0B0F16] py-20 transition-all duration-700 ease-out ${
+        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+      }`}
     >
-      <div className="mx-auto max-w-3xl px-4">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center">FAQ</h2>
-        <div className="mt-6 bg-white rounded-2xl shadow-sm ring-1 ring-black/5 hover-aurora">
-          {faqs.map((f, i) => (
-            <details key={i} className="p-5 transition active:scale-95">
-              <summary className="cursor-pointer list-none font-medium flex items-center justify-between gap-4 select-none transition active:scale-95">
-                <span><span className="mr-2">{i + 1}.</span> {f.q}</span>
-                <span className="text-slate-400">▼</span>
-              </summary>
-              <p className="mt-2 text-slate-700">{f.a}</p>
-            </details>
-          ))}
-        </div>
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <p className="text-slate-600 text-base sm:text-lg">Ask the question.</p>
-          <a
-            href="mailto:sspacefleetcommander@gmail.com"
-            className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-slate-900 hover:bg-slate-800 active:scale-95 transition rounded-xl hover-aurora"
-          >
-            Email Us
-          </a>
+      <div className="relative mx-auto min-h-[620px] max-w-7xl px-6">
+        <div className="absolute right-[-40px] top-1/2 z-0 -translate-y-1/2">
+  <img
+    src="/media/image 84.png"
+    alt="Spaceship"
+    className="w-[760px] max-w-none object-contain"
+  />
+
+  {/* размытие краёв */}
+  <div className="pointer-events-none absolute inset-0 rounded-[40px] bg-gradient-to-r from-[#0B0F16] via-transparent to-[#0B0F16]" />
+
+  <div className="pointer-events-none absolute inset-0 rounded-[40px] bg-gradient-to-b from-[#0B0F16] via-transparent to-[#0B0F16]" />
+</div>
+
+        <div className="relative z-10 w-[440px] rounded-[34px] border border-white/35 bg-white/[0.06] px-8 py-8 backdrop-blur-xl">
+          <h2 className="text-5xl font-bold text-white">FAQ</h2>
+
+          <div className="mt-8 space-y-7">
+            {faqs.map((f, i) => (
+              <div key={i} className="space-y-3">
+                <div className="relative w-[260px] rounded-md bg-[#8BC4E0] px-5 py-3 text-[13px] text-[#0B0F16]">
+                  {f.q}
+                  <div className="absolute -bottom-3 left-0 h-0 w-0 border-r-[18px] border-t-[16px] border-r-transparent border-t-[#8BC4E0]" />
+                </div>
+
+                <div className="relative ml-auto w-[260px] rounded-md bg-[#95D0AA] px-5 py-3 text-[13px] text-[#0B0F16]">
+                  {f.a}
+                  <div className="absolute -bottom-3 right-0 h-0 w-0 border-l-[18px] border-t-[16px] border-l-transparent border-t-[#95D0AA]" />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -765,46 +812,50 @@ function FAQ() {
 }
 
 function Newsletter() {
-  const [ref, visible] = useInView({ threshold: 0.15 });
   return (
-    <section
-      ref={ref}
-      className={`relative py-14 bg-white transition-all duration-700 ease-out ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
-        }`}
-    >
-      <div className="mx-auto max-w-4xl px-4">
-        <div className="rounded-2xl bg-gradient-to-r from-white to-slate-50 p-8 text-center shadow-sm ring-1 ring-black/5 hover-aurora">
-          <h3 className="text-2xl font-semibold">Get Updates</h3>
-          <p className="mt-2 text-slate-600">
-            Subscribe for dev logs, betas, and release news.
-          </p>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              alert("Thanks!");
-            }}
-            className="mt-5 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
+    <footer className="relative overflow-hidden bg-[#0B0F16] py-24">
+      
+      {/* фон */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0B0F16] via-[#101827] to-[#0B0F16]" />
+
+      <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
+        
+        {/* заголовок */}
+        <h2 className="text-6xl font-light tracking-tight text-white md:text-7xl">
+          Get Updates
+        </h2>
+
+        {/* подзаголовок */}
+        <p className="mt-5 text-lg text-white/80">
+          Subscribe for dev logs, betas, and release news.
+        </p>
+
+        {/* форма */}
+        <div className="mx-auto mt-12 flex max-w-4xl flex-col gap-4 sm:flex-row">
+          
+          {/* input */}
+          <input
+            type="email"
+            placeholder=""
+            className="h-[74px] flex-1 rounded-[22px] bg-[#D9D9D9] px-6 text-2xl text-black outline-none transition"
+          />
+
+          {/* button */}
+          <button
+            className="h-[74px] rounded-[22px] bg-[#8BC4E0] px-14 text-2xl font-medium text-black transition hover:brightness-110 active:scale-[0.98]"
           >
-            <input
-              type="email"
-              required
-              placeholder="you@domain.com"
-              className="w-full max-w-md px-4 py-3 bg-white shadow-sm placeholder:text-slate-400 ring-1 ring-black/5 focus:outline-none focus:ring-2 focus:ring-slate-400"
-            />
-            <button type="submit" className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-slate-900 hover:bg-slate-800 active:scale-95 transition rounded-xl hover-aurora">
-              Subscribe
-            </button>
-          </form>
+            Subscribe
+          </button>
         </div>
       </div>
-    </section>
+    </footer>
   );
 }
 
 /* ===== Footer — СТЕКЛЯННЫЙ как хедер ===== */
 function Footer({ setShowPrivacy, setShowTerms }) {
   return (
-    <footer className="py-4 bg-neutral-900/85 text-white backdrop-blur-xl ring-1 ring-white/10 supports-[backdrop-filter]:bg-neutral-900/75">
+    <footer className="relative overflow-hidden bg-[#0B0F16] pt-16 pb-24">
       <div className="px-4 sm:px-6 lg:px-8">
         {/* Основная часть футера */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0 mb-3">
