@@ -509,7 +509,7 @@ function GameplayBlock() {
               </h3>
 
               <p className="mt-5 max-w-[520px] text-sm leading-relaxed text-white/75">
-                Engage in fast-paced real-time space battles, where every second counts. Use the *active pause* to issue tactical commands, then jump right back into the action. Between the fights, explore role-playing elements that let you shape your character and fleet.
+                Fight on the front lines, command fleets across star systems, negotiate alliances, and shape the balance of power through your decisions. Synvector combines third-person action combat, tactical squad management, strategic planning, and narrative-driven progression into a single interconnected experience.
               </p>
             </div>
           </div>
