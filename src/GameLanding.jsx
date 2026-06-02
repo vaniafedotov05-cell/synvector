@@ -333,7 +333,7 @@ function Hero() {
     muted
     playsInline
   >
-    <source src="/media/0001-0240.mp4" type="video/mp4" />
+    <source src="/media/0602.mp4" type="video/mp4" />
   </video>
 
       {/* затемнение */}
@@ -346,8 +346,7 @@ function Hero() {
 <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col px-6 pt-64 pb-4">
   <div className="flex flex-1 flex-col justify-end pb-4">
           <div className="ml-auto mb-6 max-w-[380px] rounded-2xl bg-black/25 px-5 py-3 text-left text-sm sm:text-xs leading-tight text-white backdrop-blur-md ring-1 ring-white/60">
-            Mount & Blade in space — Action RPG with tactical pause,
-            customizable fleets, co-op and moral contracts.
+            Mount & Blade in space - Action 3D RPG with massive battles, tactical pause, customizable fleets, co-op and moral contracts.
           </div>
 
           <img
@@ -500,9 +499,7 @@ function GameplayBlock() {
               </h3>
 
               <p className="mt-5 max-w-[430px] text-sm leading-relaxed text-white/75">
-                Forge through black-and-white choices. Every decision shifts
-                alliances, sparks rivalries, and shapes the fate of the galaxy.
-                Your actions define the story — and your reputation.
+                Forget about black-and-white choices. Every decision shifts alliances, sparks rivalries, and shapes the fate of the galaxy. Your actions define the story — and your reputation.
               </p>
             </div>
 
@@ -512,11 +509,7 @@ function GameplayBlock() {
               </h3>
 
               <p className="mt-5 max-w-[520px] text-sm leading-relaxed text-white/75">
-                Engage in fast-paced real-time space battles, where every second
-                counts. Use the *active pause* to issue tactical commands, then
-                jump right back into the action. Between the fights, explore
-                role-playing elements that let you shape your character and
-                fleet.
+                Engage in fast-paced real-time space battles, where every second counts. Use the *active pause* to issue tactical commands, then jump right back into the action. Between the fights, explore role-playing elements that let you shape your character and fleet.
               </p>
             </div>
           </div>
@@ -598,12 +591,12 @@ function About() {
 
   const people = [
     // Management
-    { name: "Alexey Aleshin", role: "CEO", img: "/media/Ellipse 1.png" },
+    { name: "Alexey Aleshin", role: "CEO", img: "/media/Ellipse 28.png" },
     { name: "Ivan Kalnaus", role: "Project manager", img: "/media/Ellipse 24.png" },
-    { name: "Konstantin", role: "Marketing Manager", img: "/media/Ellipse 3.png" },
+    { name: "Konstantin", role: "Marketing Manager", img: "/media/Ellipse 29.png" },
 
     // Design
-    { name: "Pavel Puzyna", role: "Lead Narrative designer", img: "/media/Ellipse 4.png" },
+    { name: "Pavel Puzyna", role: "Lead Narrative designer", img: "/media/Ellipse 30.png" },
     { name: "Maxim Novikov", role: "Game designer", img: "/media/Ellipse 15.png" },
     { name: "Maxim Dubrovsky", role: "Tech Game designer", img: "/media/Ellipse 6.png" },
     { name: "Gleb Kovalevich", role: "UIUX designer", img: "/media/Ellipse 1.png" },
@@ -615,10 +608,11 @@ function About() {
     { name: "Egor Kirik", role: "VFX/TechArt", img: "/media/Ellipse 17.png" },
 
     // Development
+    { name: "Andrey Shmanatov", role: "CTO", img: "/media/Ellipse 3.png" },
     { name: "Anna Potetenko", role: "Developer/UX", img: "/media/Ellipse 8.png" },
     { name: "Margarita Chebotareva", role: "Developer", img: "/media/Ellipse 9.png" },
     { name: "Alexander Poretsky", role: "Developer", img: "/media/Ellipse 18.png" },
-    { name: "Andrey Shmanatov", role: "CTO", img: "/media/Ellipse 3.png" },
+    { name: "Anna Potetenko", role: "Developer/UX", img: "/media/Ellipse 8.png" },
 
     // 2D
     { name: "Daniil Yuminov", role: "Art Director", img: "/media/Ellipse 10.png" },
@@ -631,7 +625,7 @@ function About() {
     // 3D
     { name: "Aleksei Barash", role: "3D Lead", img: "/media/Ellipse 21.png" },
     { name: "Artyom Stikhin", role: "3D artist", img: "/media/Ellipse 13.png" },
-    { name: "Artyom", role: "3D artist", img: "/media/Ellipse 22.png" },
+    { name: "Artyom Alshevsky", role: "3D artist", img: "/media/Ellipse 22.png" },
     { name: "Vladislav Kiselev", role: "3D artist texture", img: "/media/Ellipse 5.png" },
     { name: "Margarita Borzykh", role: "Cinematic 3D artist", img: "/media/Ellipse 14.png" },
     { name: "Sergey Dolzhenko", role: "VFX / Rigger", img: "/media/Ellipse 23.png" },
@@ -685,23 +679,23 @@ function About() {
               </div>
             </Group>
 
-            <div className="grid gap-6 lg:grid-cols-[0.65fr_1.35fr]">
-              <Group title="Tech Art">
-                <div className="grid grid-cols-2 gap-5">
-                  {people.slice(9, 11).map((p, i) => (
-                    <Person key={i} person={p} />
-                  ))}
-                </div>
-              </Group>
+            <div className="grid gap-6 lg:grid-cols-[1.35fr_0.65fr]">
+  <Group title="Development team">
+    <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
+      {people.slice(11, 15).map((p, i) => (
+        <Person key={i} person={p} />
+      ))}
+    </div>
+  </Group>
 
-              <Group title="Development team">
-                <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
-                  {people.slice(11, 15).map((p, i) => (
-                    <Person key={i} person={p} />
-                  ))}
-                </div>
-              </Group>
-            </div>
+  <Group title="Tech Art">
+    <div className="grid grid-cols-2 gap-5">
+      {people.slice(9, 11).map((p, i) => (
+        <Person key={i} person={p} />
+      ))}
+    </div>
+  </Group>
+</div>
 
             <Group title="2d team">
               <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
