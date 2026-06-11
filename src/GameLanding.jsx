@@ -608,11 +608,10 @@ function About() {
     { name: "Egor Kirik", role: "VFX/TechArt", img: "/media/Ellipse 17.png" },
 
     // Development
-    { name: "Andrey Shmanatov", role: "CTO", img: "/media/Ellipse 3.png" },
-    { name: "Anna Potetenko", role: "Developer/UX", img: "/media/Ellipse 8.png" },
-    { name: "Margarita Chebotareva", role: "Developer", img: "/media/Ellipse 9.png" },
-    { name: "Alexander Poretsky", role: "Developer", img: "/media/Ellipse 18.png" },
-    { name: "Anna Potetenko", role: "Developer/UX", img: "/media/Ellipse 8.png" },
+{ name: "Andrey Shmanatov", role: "CTO", img: "/media/Ellipse 3.png" },
+{ name: "Anna Potetenko", role: "Developer/UX", img: "/media/Ellipse 8.png" },
+{ name: "Margarita Chebotareva", role: "Developer", img: "/media/Ellipse 9.png" },
+{ name: "Alexander Poretsky", role: "Developer", img: "/media/Ellipse 18.png" },
 
     // 2D
     { name: "Daniil Yuminov", role: "Art Director", img: "/media/Ellipse 10.png" },
@@ -627,7 +626,6 @@ function About() {
     { name: "Artyom Stikhin", role: "3D artist", img: "/media/Ellipse 13.png" },
     { name: "Artyom Alshevsky", role: "3D artist", img: "/media/Ellipse 22.png" },
     { name: "Vladislav Kiselev", role: "3D artist texture", img: "/media/Ellipse 5.png" },
-    { name: "Margarita Borzykh", role: "Cinematic 3D artist", img: "/media/Ellipse 14.png" },
     { name: "Sergey Dolzhenko", role: "VFX / Rigger", img: "/media/Ellipse 23.png" },
   ];
 
