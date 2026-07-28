@@ -23,7 +23,7 @@ export const MEDIA = {
     footer: "/media/Synvector_Logo_symbol.webp",
   },
   socials: [
-    { label: "Steam", href: "#steam" },
+    { label: "Steam", href: "https://store.steampowered.com/app/3220640/Synvector/" },
     { label: "YouTube", href: "https://youtube.com/@synvector?si=EJQYPf4lMRUJQjNO" },
     { label: "Reddit", href: "https://www.reddit.com/r/Synvector/" },
     { label: "Discord", href: "https://discord.gg/9kqW3JBfP5" },
@@ -358,7 +358,7 @@ function Hero() {
 />
 
           <a
-  href={MEDIA.socials.find((s) => s.label === "Steam")?.href || "#"}
+  href={MEDIA.socials.find((s) => s.label === "Steam")?.href || "https://store.steampowered.com/app/3220640/Synvector/"}
   className="mx-auto mt-5 inline-flex h-[92px] w-[320px] items-center justify-center bg-contain bg-center bg-no-repeat text-3xl font-bold text-white transition hover:scale-[1.02] active:scale-95"
   style={{
     backgroundImage: "url('/media/Rectangle 28.png')"
